@@ -1,16 +1,13 @@
-import styled from 'styled-components'
 import GlobalStyles from './styles/GlobalStyles'
-
-const H1 = styled.h1`
-  font-size: 30px;
-  font-weight: 600;
-`
+import Heading from './ui/Heading'
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <H1>Hello world</H1>
+      <Heading type="h1">Hello world</Heading>
+      <Heading as="h2">Hello world</Heading>
+      <Heading as="h3">Hello world</Heading>
     </>
   )
 }
