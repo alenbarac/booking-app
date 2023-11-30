@@ -8,7 +8,7 @@ const Row = styled.div`
     css`
       justify-content: space-between;
       align-items: center;
-    ,`}
+    `}
 
   ${(props) =>
     props.type === 'vertical' &&
@@ -17,5 +17,9 @@ const Row = styled.div`
       gap: 1.6rem;
     `}
 `
+
+Row.defaultProps = {
+  type: 'vertical',
+}
 
 export default Row
