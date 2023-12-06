@@ -8,6 +8,8 @@ import Spinner from '../../ui/Spinner'
 import CreateCabinForm from './CreateCabinForm'
 import { useCreateCabin } from './useCreateCabin'
 import { useDeleteCabin } from './useDeleteCabin'
+import Modal from '../../ui/Modal'
+import ConfirmDelete from '../../ui/ConfirmDelete'
 
 const TableRow = styled.div`
   display: grid;
@@ -49,7 +51,6 @@ const Discount = styled.div`
 `
 
 function CabinRow({ cabin }) {
-  const [showEditForm, setShowEditForm] = useState(false)
   const { isDeleting, deleteCabin } = useDeleteCabin()
 
   const { id, image, name, maxCapacity, regularPrice, discount, description } = cabin
@@ -83,15 +84,32 @@ function CabinRow({ cabin }) {
           <button disabled={isCreating}>
             <HiMiniSquare2Stack onClick={handleDuplicate} />
           </button>
-          <button onClick={() => setShowEditForm((show) => !show)}>
-            <HiPencilSquare />
-          </button>
-          <button onClick={() => deleteCabin(id)} disabled={isDeleting}>
-            <HiOutlineTrash />
-          </button>
+
+          <Modal>
+            <Modal.Open opens="edit">
+              <button>
+                <HiPencilSquare />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+
+            <Modal.Open opens="delete">
+              <button>
+                <HiOutlineTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resourceName="cabin"
+                disabled={isDeleting}
+                onConfirm={() => deleteCabin(id)}
+              />
+            </Modal.Window>
+          </Modal>
         </div>
       </TableRow>
-      {showEditForm && <CreateCabinForm cabinToEdit={cabin} />}
     </>
   )
 }
